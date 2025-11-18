@@ -1,220 +1,186 @@
-# NDVI-VEGETATION-HEALTH-ANALYSIS-DENPASAR-BALI
-# 🌿 Project 02 — NDVI Vegetation Health Analysis (Denpasar, Bali)
+<div align="center">
 
-This project performs a complete **NDVI vegetation health analysis** using **Sentinel-2 Surface Reflectance (L2A)** for the Denpasar region.  
-It is part of my Geospatial Analyst / Remote Sensing portfolio and demonstrates real-world EO data processing workflows.
+# 🌿 **NDVI Vegetation Health Analysis — Denpasar, Bali**
+### 🛰️ Remote Sensing • Geospatial • Python • AI Model Evaluation
 
----
+<br>
 
-## 📌 Overview
+[![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)]()
+[![Rasterio](https://img.shields.io/badge/Rasterio-GeoTIFF-green)]()
+[![Geopandas](https://img.shields.io/badge/Geopandas-Vector-orange)]()
+[![NumPy](https://img.shields.io/badge/NumPy-Array%20Math-blue)]()
+[![SciPy](https://img.shields.io/badge/SciPy-Filtering-red)]()
+[![Sentinel-2](https://img.shields.io/badge/Sentinel--2-L2A-yellow)]()
+[![License](https://img.shields.io/badge/License-MIT-purple)]()
 
-This project includes:
-
-- 🛰 Loading multi-band Sentinel-2 GeoTIFF (B4, B8, SCL)  
-- ☁ Cloud masking using SCL (codes 3,7,8,9,10,11)  
-- 🌱 NDVI computation & normalization  
-- 🧠 Adaptive classification using percentiles (Low → Very High)  
-- 🗺 High-quality visualization with discrete colorbar + legend box  
-- 🗂 Export:
-  - NDVI GeoTIFF  
-  - Classified NDVI GeoTIFF  
-  - PNG map  
-  - Vector polygons (GPKG)  
-  - NDVI statistics (JSON)
-
-All steps are executed using **Python + Rasterio + GeoPandas** in a reproducible conda environment.
+<br>
+</div>
 
 ---
 
-## 📂 Project Structure
+<p align="center">
+  <img width="720" src="outputs/maps/ndvi_classified_map.png" alt="NDVI Classified Map">
+</p>
 
+---
+
+## 🌍 **Overview**
+
+This project performs a complete **NDVI vegetation analysis** for **Denpasar, Bali**, using **Sentinel-2 L2A Surface Reflectance**.  
+It demonstrates an EO pipeline suitable for:
+
+- Geospatial Data Analyst  
+- Remote Sensing Specialist  
+- AI/ML Geospatial Evaluator (RLHF)  
+- Earth Observation Automation  
+
+📌 Includes:
+
+- Reflectance scaling  
+- Cloud masking (SCL)  
+- NDVI raster generation  
+- Adaptive percentile classification  
+- High-quality cartographic outputs  
+- Polygonized vegetation zones (GPKG)  
+- NDVI statistics summary  
+
+---
+
+## 🗂 **Project Structure**
+
+```txt
 project02_ndvi_analysis/
 │
 ├── notebooks/
-│   └── project02_ndvi_full.ipynb          # Main NDVI analysis notebook
+│   └── project02_ndvi_full.ipynb
 │
 ├── data/
-│   ├── raw/                               # Input Sentinel-2 TIFF (B4,B8,SCL)
-│   └── processed/                         # NDVI & classified TIFF outputs
+│   ├── raw/          # Sentinel-2 TIFF input
+│   └── processed/    # NDVI & classified GeoTIFFs
 │
 ├── outputs/
-│   ├── maps/                              # PNG maps + NDVI statistics (JSON)
-│   └── shapefiles/                        # Polygonized NDVI classes (GPKG)
+│   ├── maps/         # PNG maps + JSON stats
+│   └── shapefiles/   # GPKG polygon results
 │
 └── README.md
 
+---
+
+## 🛰️ **Data Sources**
+| Dataset | Source | Usage |
+|--------|--------|--------|
+| 🌅 **Sentinel-2 L2A** | 	Google Earth Engine | NDVI inputs (B4,B8,SCL) |
+| ☁ **Scene Classification (SCL)** | GEE | Cloud/shadow masking |
+| 🗺 **AOI (BBox)** | Custom | Denpasar region |
 
 ---
 
-## 🛰 Data Source — Sentinel-2 (L2A)
+## 🔁 Workflow Diagram (Visual)
 
-Exported via **Google Earth Engine**:
-
-- **B4** (Red)
-- **B8** (Near Infrared)
-- **SCL** (Scene Classification Layer)
-
-The notebook includes a full export script (GEE JavaScript).
-
----
-
-## 🔬 Methodology
-
-### **1. Preprocessing**
-- Load B4, B8, SCL
-- Handle reflectance scaling (×10000 → 0–1)
-- Cloud masking using SCL codes:
-clouds = [3, 7, 8, 9, 10, 11]
-
-
----
-
-### **2. NDVI Calculation**
-
-\[
-NDVI = \frac{NIR - RED}{NIR + RED}
-\]
-
-Saved to:
-
-data/processed/ndvi_denpasar.tif
-
-
-Nodata = `-9999` for robust GDAL/QGIS handling.
-
----
-
-### **3. NDVI Classification**
-
-Adaptive thresholds from percentiles:
-
-| Class | Description | Percentile |
-|-------|-------------|------------|
-| 1     | Low         | ≤ p10      |
-| 2     | Moderate    | p10–p50    |
-| 3     | High        | p50–p90    |
-| 4     | Very High   | ≥ p90      |
-
-Saved to:
-
-data/processed/ndvi_classified.tif
+Sentinel-2 (B4, B8, SCL)
+        │
+        ▼
+Reflectance Scaling (0–1)
+        │
+        ▼
+Cloud Masking (SCL codes)
+        │
+        ▼
+NDVI Calculation
+        │
+        ▼
+Adaptive Classification (p10,p50,p90)
+        │
+┌───────┴────────┐
+│                │
+▼                ▼
+PNG Map     Polygonized NDVI (GPKG)
 
 
 ---
 
-### **4. Visualization**
+## 🌈 NDVI Class Legend
+| Class | MEANING| Color |
+|-------|--------|--------|
+| **1** | 🟥 Low	| `#d73027` |
+| **2** | 🟧 Moderate	| `#fc8d59` |
+| **3** | 🟨 High | `#fee08b` |
+| **4** | 🟩 Very High | `#1a9850` |
 
-Features:
-
-- Discrete 4-color NDVI classification
-- Vertical colorbar (Low → Very High)
-- Legend box with category labels
-- 300 DPI PNG export
-
-Output:
-
-outputs/maps/ndvi_classified_map.png
-
-
----
-
-### **5. Polygonization**
-
-Raster → vector (dissolve per class, optional simplify):
-
+## 🖼 Output Previews
+✔ Classified NDVI Map
+<p align="center"> <img width="640" src="outputs/maps/ndvi_classified_map.png"> </p>
+✔ NDVI Histogram
+Generated directly from valid NDVI pixel distribution.
+✔ GPKG Vegetation Zones
 outputs/shapefiles/ndvi_denpasar_classes.gpkg
 
+## 📦 Generated Outputs
 
----
+### 🗃 Raster Outputs
+data/processed/
+- `ndvi_denpasar.tif
+- `ndvi_classified.tif
 
-### **6. NDVI Statistics (JSON)**
+### 🗂 Vector Outputs
+- `outputs/shapefiles/
+- `ndvi_denpasar_classes.gpkg
+
+###🧾 NDVI Statistics
+- `outputs/maps/ndvi_stats.json
+
+Contains:
+NDVI min/max/mean
+
+Class pixel distribution
+
+##📘 Main Notebook
+📄 project02_ndvi_full.ipynb
 
 Includes:
-
-- NDVI min/max/mean
-- Class pixel count
-
-outputs/maps/ndvi_stats.json
-
-
----
-
-## 🛠 Tools Used
-
-- Python 3.10  
-- Rasterio  
-- GDAL  
-- GeoPandas  
-- NumPy  
-- Matplotlib  
-- SciPy  
-- Google Earth Engine  
+- Cloud masking
+- Reflectance scaling
+- NDVI computation
+- Classification (1–4)
+- PNG rendering with colorbar + legend
+- Polygonization
+- Geometry simplification
+- QA validation steps
 
 ---
 
-## ▶ How to Run
+## 🧪 **QA/QC Checks**
 
-### **1. Activate environment**
-```bash
-conda activate geo
-2. Start JupyterLab
-bash
-Salin kode
-jupyter lab
-3. Open notebook
-bash
-Salin kode
-notebooks/project02_ndvi_full.ipynb
-4. Place input TIFF
-bash
-Salin kode
-data/raw/sentinel2_denpasar_*.tif
-5. Run all cells
-From top to bottom.
+| Check | Status |
+|-------|--------|
+| CRS	✔ | EPSG:4326 |
+| Reflectance	✔ | Normalized |
+| NDVI range	✔ | -1 to 1 |
+| Cloud removal	✔ | SCL-based |
+| Class thresholds	✔ | p10,p50,p90 |
+| Geometry validity	✔ | Passed |
 
-📸 Example Output (add your image)
+##🎯 Skills Demonstrated
 
-outputs/maps/ndvi_classified_map.png
-📊 Key Results (Example)
-NDVI range: –0.34 → 0.69
+- Earth Observation (EO) data processing
+- Sentinel-2 reflectance handling
+- NDVI & vegetation metrics
+- RasterIO, GeoPandas, NumPy
+- Spatial classification & filtering
+- Vectorization (GPKG)
+- Map design & styling
+- AI model evaluation (geospatial RLHF)
+- Geospatial QA/QC workflows
 
-NDVI mean: 0.15
+## 👤 **Author**
+**Samueli Windovado Fau**  
+🌐 GitHub: https://github.com/samuelifau  
+💼 LinkedIn: https://www.linkedin.com/in/samueli-fau  
 
-Class distribution:
+---
 
-Low: 97k px
+<div align="center">
+### ⭐ If this project was useful, please star the repo!
+It supports my applications for Geospatial / GeoAI / RLHF roles.
 
-Moderate: 610k px
-
-High: 2.44M px
-
-Very High: 2.44M px
-
-(Numbers vary depending on date and cloud coverage.)
-
-📎 Repository
-🔗 https://github.com/samuelifau/Flood-Risk-Analysis---Denpasar-Bali
-
-💼 Skills Demonstrated
-Earth Observation (EO) analysis
-
-Raster processing with Rasterio
-
-Cloud masking
-
-NDVI vegetation index
-
-Raster classification
-
-Polygonization & vector processing
-
-Map design & visualization
-
-Geospatial Python automation
-
-Portfolio-level documentation
-
-🤝 Connect with Me
-🔗 linkedin.com/in/samueli-fau
-
-If you are working with EO, climate, ML for geospatial, or RLHF for mapping tasks — feel free to reach out!
+</div> ```
