@@ -66,12 +66,13 @@ project02_ndvi_analysis/
 
 ---
 
-## 🛰️ **Data Sources**
-| Dataset | Source | Usage |
-|--------|--------|--------|
-| 🌅 **Sentinel-2 L2A** | 	Google Earth Engine | NDVI inputs (B4,B8,SCL) |
-| ☁ **Scene Classification (SCL)** | GEE | Cloud/shadow masking |
-| 🗺 **AOI (BBox)** | Custom | Denpasar region |
+## 📊 **Data Sources**
+
+| Dataset                      | Source               | Usage                          |
+|------------------------------|----------------------|--------------------------------|
+| 🌍 **Sentinel-2 L2A**        | Google Earth Engine  | NDVI inputs (B4, B8, SCL)      |
+| ☁️ **Scene Classification**  | GEE                  | Cloud/Shadow masking           |
+| 📦 **AOI (BBox)**            | Custom               | Denpasar region                |
 
 ---
 
