@@ -27,7 +27,7 @@
 ## 🌍 **Overview**
 
 This project performs a complete **NDVI vegetation analysis** for **Denpasar, Bali**, using **Sentinel-2 L2A Surface Reflectance**.  
-It demonstrates an EO pipeline suitable for:
+It demonstrates an EO workflow suitable for:
 
 - Geospatial Data Analyst  
 - Remote Sensing Specialist  
@@ -38,7 +38,7 @@ It demonstrates an EO pipeline suitable for:
 
 - Reflectance scaling  
 - Cloud masking (SCL)  
-- NDVI raster generation  
+- NDVI raster creation  
 - Adaptive percentile classification  
 - High-quality cartographic outputs  
 - Polygonized vegetation zones (GPKG)  
@@ -58,11 +58,8 @@ project02_ndvi_analysis/
 │   ├── raw/          # Sentinel-2 TIFF input
 │   └── processed/    # NDVI & classified GeoTIFFs
 │
-├── outputs/
-│   ├── maps/         # PNG maps + JSON stats
-│   └── shapefiles/   # GPKG polygon results
-│
 └── README.md
+```
 
 ---
 
@@ -76,104 +73,106 @@ project02_ndvi_analysis/
 
 ---
 
-## 🔁 Workflow Diagram (Visual)
+## 🔁 **Workflow Diagram (Visual)**
 
-Sentinel-2 (B4, B8, SCL)
-        │
-        ▼
-Reflectance Scaling (0–1)
-        │
-        ▼
-Cloud Masking (SCL codes)
-        │
-        ▼
-NDVI Calculation
-        │
-        ▼
-Adaptive Classification (p10,p50,p90)
-        │
-┌───────┴────────┐
-│                │
-▼                ▼
-PNG Map     Polygonized NDVI (GPKG)
-
+<p align="center">
+<img width="302" height="464" alt="image" src="https://github.com/user-attachments/assets/a265e029-5584-413d-a033-405a718f0afa" />
+</p>
 
 ---
 
-## 🌈 NDVI Class Legend
-| Class | MEANING| Color |
-|-------|--------|--------|
-| **1** | 🟥 Low	| `#d73027` |
-| **2** | 🟧 Moderate	| `#fc8d59` |
-| **3** | 🟨 High | `#fee08b` |
-| **4** | 🟩 Very High | `#1a9850` |
+## 🌈 **NDVI Class Legend**
 
-## 🖼 Output Previews
-✔ Classified NDVI Map
-<p align="center"> <img width="640" src="outputs/maps/ndvi_classified_map.png"> </p>
-✔ NDVI Histogram
-Generated directly from valid NDVI pixel distribution.
-✔ GPKG Vegetation Zones
-outputs/shapefiles/ndvi_denpasar_classes.gpkg
+| Class | Meaning     | Color       |
+|-------|-------------|-------------|
+| **1** | 🟥 Low       | `#d73027`   |
+| **2** | 🟧 Moderate  | `#fc8d59`   |
+| **3** | 🟨 High      | `#fee08b`   |
+| **4** | 🟩 Very High | `#1a9850`   |
 
-## 📦 Generated Outputs
+---
 
-### 🗃 Raster Outputs
-data/processed/
-- `ndvi_denpasar.tif
-- `ndvi_classified.tif
+## 🖼 **Output Previews**
 
-### 🗂 Vector Outputs
-- `outputs/shapefiles/
-- `ndvi_denpasar_classes.gpkg
+### ✔ Classified NDVI Map  
+<p align="center">
+  <img width="640" src="outputs/maps/ndvi_classified_map.png">
+</p>
 
-###🧾 NDVI Statistics
-- `outputs/maps/ndvi_stats.json
+### ✔ NDVI Histogram  
+Generated from valid NDVI pixel distribution.
 
-Contains:
-NDVI min/max/mean
+### ✔ GPKG Vegetation Zones  
+`outputs/shapefiles/ndvi_denpasar_classes.gpkg`
 
-Class pixel distribution
+---
 
-##📘 Main Notebook
-📄 project02_ndvi_full.ipynb
+## 📦 **Generated Outputs**
+
+### 🗃 Raster Outputs  
+Located in: `data/processed/`
+- `ndvi_denpasar.tif`
+- `ndvi_classified.tif`
+
+### 🗂 Vector Outputs  
+Located in: `outputs/shapefiles/`
+- `ndvi_denpasar_classes.gpkg`
+
+### 🧾 NDVI Statistics  
+- `outputs/maps/ndvi_stats.json`
+
+Contains:  
+- NDVI min / max / mean  
+- Class pixel distribution  
+
+---
+
+## 📘 **Main Notebook**
+
+📄 `project02_ndvi_full.ipynb`
 
 Includes:
-- Cloud masking
-- Reflectance scaling
-- NDVI computation
-- Classification (1–4)
-- PNG rendering with colorbar + legend
-- Polygonization
-- Geometry simplification
-- QA validation steps
+
+- Cloud masking  
+- Reflectance scaling  
+- NDVI computation  
+- Classification (1–4)  
+- PNG rendering with colorbar + legend  
+- Polygonization  
+- Geometry simplification  
+- QA validation steps  
 
 ---
 
 ## 🧪 **QA/QC Checks**
 
-| Check | Status |
-|-------|--------|
-| CRS	✔ | EPSG:4326 |
-| Reflectance	✔ | Normalized |
-| NDVI range	✔ | -1 to 1 |
-| Cloud removal	✔ | SCL-based |
-| Class thresholds	✔ | p10,p50,p90 |
-| Geometry validity	✔ | Passed |
+| Check               | Status        |
+|---------------------|---------------|
+| CRS                 | ✔ EPSG:4326   |
+| Reflectance         | ✔ Normalized  |
+| NDVI range          | ✔ -1 to 1     |
+| Cloud removal       | ✔ SCL-based   |
+| Classification bins | ✔ p10,p50,p90 |
+| Geometry validity   | ✔ Passed      |
 
-##🎯 Skills Demonstrated
+---
 
-- Earth Observation (EO) data processing
-- Sentinel-2 reflectance handling
-- NDVI & vegetation metrics
-- RasterIO, GeoPandas, NumPy
-- Spatial classification & filtering
-- Vectorization (GPKG)
-- Map design & styling
-- AI model evaluation (geospatial RLHF)
-- Geospatial QA/QC workflows
+## 🎯 **Skills Demonstrated**
+
+- Earth Observation data processing  
+- Sentinel-2 reflectance handling  
+- NDVI & vegetation metrics  
+- RasterIO, GeoPandas, NumPy  
+- Spatial classification & filtering  
+- Vectorization (GPKG)  
+- Map design & styling  
+- AI model evaluation (Geospatial RLHF)  
+- Geospatial QA/QC workflows  
+
+---
 
 ## 👤 **Author**
+
 **Samueli Windovado Fau**  
 🌐 GitHub: https://github.com/samuelifau  
 💼 LinkedIn: https://www.linkedin.com/in/samueli-fau  
@@ -181,7 +180,8 @@ Includes:
 ---
 
 <div align="center">
-### ⭐ If this project was useful, please star the repo!
+
+### ⭐ If this project was useful, please star the repo!  
 It supports my applications for Geospatial / GeoAI / RLHF roles.
 
-</div> ```
+</div>
